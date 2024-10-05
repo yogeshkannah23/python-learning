@@ -4,7 +4,7 @@ from django.db import models
 
 class Person(models.Model):
     name = models.CharField(max_length=30,blank=False,default="summa")
-    age = models.IntegerField(max_length=10)
+    age = models.IntegerField()
 
 
 class ShirtManager(models.Manager):
@@ -23,3 +23,17 @@ class Shirt(models.Model):
 
     # objects = models.Manager()  # Default manager
     # small_shirts = ShirtManager()  # Custom manager
+
+class Product(models.Model):
+    name = models.CharField(max_length=20,unique=True)
+    quantity = models.PositiveSmallIntegerField()
+    
+    def __str__(self) -> str:
+        return f'{self.name}'
+    
+class Order(models.Model):
+    name = models.ForeignKey(Product,on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField()
+    
+    def __str__(self) -> str:
+        return f'{self.name}'
