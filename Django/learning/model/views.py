@@ -3,6 +3,7 @@ from django.http import request,HttpResponse
 from model.models import *
 from model.forms import ProductForm
 from django.db import transaction
+from django.forms import formset_factory
 # Create your views here.
 
 
@@ -36,3 +37,9 @@ def product_form(request):
 
 def send_mail():
     print(f"Email sent to ")
+    
+def multiple_form(request):
+    product_forms = formset_factory(ProductForm, extra=3, can_delete=True)
+    
+    form = product_forms()
+    return render(request,'multiple_form.html',{'formset':form})
